@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Drills</h2>
+<ul class="list-group">
+    {% for drill in drills %}
+        <li class="list-group-item">
+            <h3>{{ drill.name }}</h3>
+            <p>{{ drill.description }}</p>
+            <a href="{{ drill.video_url }}" target="_blank" class="btn btn-primary">Watch Video</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

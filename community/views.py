@@ -1,12 +1,20 @@
-from rest_framework import viewsets
-from .models import Community
-from .serializers import CommunitySerializer
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import CommunityPost
+from .forms import CommunityPostForm
 
 def home(request):
-    return render(request, 'home.html')
+    posts = CommunityPost.objects.all()
+    return render(request, 'community/home.html', {'posts': posts})
 
-class CommunityViewSet(viewsets.ModelViewSet):
-    queryset = Community.objects.all()
-    serializer_class = CommunitySerializer
+def add_post(request):
+    if request.method == 'POST':
+        form = CommunityPostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CommunityPostForm()
+    return render(request, 'community/add_post.html', {'form': form})
+def community_list(request):
+    posts = CommunityPost.objects.all()
+    return render(request, 'community/community_list.html', {'posts': posts})

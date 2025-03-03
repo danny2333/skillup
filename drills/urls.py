@@ -1,10 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import DrillViewSet
-
-router = DefaultRouter()
-router.register(r'drills', DrillViewSet)
+from django.urls import path
+from .views import drill_list, add_drill
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', drill_list, name='drill_list'),
+    path('add/', add_drill, name='add_drill'),
 ]
