@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import CommunityPost
 from .forms import CommunityPostForm
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     posts = CommunityPost.objects.all()
@@ -10,8 +11,10 @@ def add_post(request):
     if request.method == 'POST':
         form = CommunityPostForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            post = form.save(commit=False) 
+            post.author = request.user 
+            post.save() 
+            return redirect('community_list') 
     else:
         form = CommunityPostForm()
     return render(request, 'community/add_post.html', {'form': form})
