@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Training Plans</h1>
+    
+    <!-- Add New Plan Button -->
+    <div class="mb-4">
+        <a href="{% url 'training:add_training' %}" class="btn btn-primary">
+            Add Training Plan
+        </a>
+    </div>
+
+    <!-- Plans List -->
+    <div class="list-group">
+        {% for plan in plans %}
+        <div class="list-group-item mb-3 shadow-sm">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h5>{{ plan.title }}</h5>
+                    <p class="mb-1">{{ plan.description }}</p>
+                    <small class="text-muted">
+                        Duration: {{ plan.duration_weeks }} weeks | 
+                        Sessions: {{ plan.sessions_per_week }}/week | 
+                        Level: <span class="badge 
+                            {% if plan.difficulty == 'Beginner' %}bg-primary
+                            {% elif plan.difficulty == 'Intermediate' %}bg-warning
+                            {% else %}bg-danger
+                            {% endif %}">
+                            {{ plan.difficulty }}
+                        </span>
+                    </small>
+                </div>
+                
+            </div>
+            
+            <!-- Included Drills -->
+            {% if plan.drills.all %}
+            <div class="mt-2">
+                <h6>Drills:</h6>
+                <div class="d-flex flex-wrap gap-1">
+                    {% for drill in plan.drills.all %}
+                    <span class="badge bg-secondary">{{ drill.title }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <div class="alert alert-info">
+            No training plans found. Create your first plan!
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

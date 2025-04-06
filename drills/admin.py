@@ -1,3 +1,6 @@
+# drills/admin.py
 from django.contrib import admin
+from .models import Drill
 
-# Register your models here.
+# Keep your existing Drill admin registration
+admin.site.register(Drill)

@@ -1,7 +1,10 @@
 from django.urls import path
-from .views import training_list, add_training
+from . import views
+
+app_name = 'training'  # Add this for namespace
 
 urlpatterns = [
-    path('', training_list, name='training_list'),
-    path('training/add/', add_training, name='add_training'),
+    path('', views.training_plan_list, name='training_list'),
+    path('add/', views.add_training, name='add_training'),
+    path('<int:pk>/', views.plan_detail, name='plan_detail'), 
 ]

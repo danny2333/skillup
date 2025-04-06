@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <h1>{{ plan.title }}</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <p class="text-muted">
+                Difficulty: <span class="badge bg-primary">{{ plan.difficulty }}</span> |
+                Duration: {{ plan.duration_weeks }} weeks |
+                Sessions: {{ plan.sessions_per_week }}/week
+            </p>
+            
+            <h3>Description</h3>
+            <p>{{ plan.description }}</p>
+            
+            <h3>Drills</h3>
+            <ul class="list-group">
+                {% for drill in plan.drills.all %}
+                <li class="list-group-item">{{ drill.title }}</li>
+                {% empty %}
+                <li class="list-group-item">No drills assigned</li>
+                {% endfor %}
+            </ul>
+            
+            <div class="mt-4">
+                <a href="{% url 'training_list' %}" class="btn btn-secondary">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
